@@ -34,8 +34,9 @@ export const mobileUniLink = (adapter: Adapter) => {
 
   if (!uniLink) return null;
 
-  const defaultLink = 'https://www.tensor.trade';
+  const defaultLink = encodeURIComponent('https://www.tensor.trade');
 
+  alert(`${window} ${window?.location?.href} ${window?.location?.origin}`);
   const suffix =
     typeof window === 'undefined' || !window?.location?.href || !window?.location?.origin
       ? `${encodeURIComponent(defaultLink)}?ref=${defaultLink}`

@@ -157,13 +157,13 @@ const ListOfWallets: React.FC<{
             })();
 
             const attachment = walletAttachments ? walletAttachments[adapter.name]?.attachment : null;
-
             return (
               <div
                 key={idx}
                 onClick={(event) => onClickWallet(event, adapter)}
                 css={[
-                  tw`py-4 px-4 lg:px-2 border border-white/10 rounded-lg flex lg:flex-col items-center lg:justify-center cursor-pointer flex-1 lg:max-w-[33%]`,
+                  tw`py-4 px-4 lg:px-2 border border-white/10 rounded-lg flex lg:flex-col items-center lg:justify-center cursor-pointer flex-1`,
+                  list.highlightedBy === 'TopWallet' ? tw`lg:max-w-[100%]` : tw`lg:max-w-[33%]`,
                   tw`hover:backdrop-blur-xl transition-all`,
                   styles.walletItem[theme],
                 ]}
@@ -237,11 +237,7 @@ export interface WalletModalProps {
 }
 
 type HIGHLIGHTED_BY = 'PreviouslyConnected' | 'Installed' | 'TopWallet' | 'Onboarding';
-const TOP_WALLETS: WalletName[] = [
-  'Phantom' as WalletName<'Phantom'>,
-  'Solflare' as WalletName<'Solflare'>,
-  'Backpack' as WalletName<'Backpack'>,
-];
+const TOP_WALLETS: WalletName[] = ['Backpack' as WalletName<'Backpack'>];
 
 interface IUnifiedWalletModal {
   onClose: () => void;
@@ -287,12 +283,20 @@ const UnifiedWalletModal: React.FC<IUnifiedWalletModal> = ({ onClose }) => {
         // Previously connected takes highest
         const previouslyConnectedIndex = previouslyConnected.indexOf(adapterName);
         if (previouslyConnectedIndex >= 0) {
-          acc.previouslyConnected[previouslyConnectedIndex] = wallet.adapter;
+          if (TOP_WALLETS.indexOf(adapterName) >= 0) {
+            acc.installed.unshift(wallet.adapter);
+          } else {
+            acc.previouslyConnected[previouslyConnectedIndex] = wallet.adapter;
+          }
           return acc;
         }
         // Then Installed
         if (wallet.readyState === WalletReadyState.Installed) {
-          acc.installed.push(wallet.adapter);
+          if (TOP_WALLETS.indexOf(adapterName) >= 0) {
+            acc.installed.unshift(wallet.adapter);
+          } else {
+            acc.installed.push(wallet.adapter);
+          }
           return acc;
         }
         // Top 3
@@ -303,12 +307,20 @@ const UnifiedWalletModal: React.FC<IUnifiedWalletModal> = ({ onClose }) => {
         }
         // Loadable
         if (wallet.readyState === WalletReadyState.Loadable) {
-          acc.loadable.push(wallet.adapter);
+          if (TOP_WALLETS.indexOf(adapterName) >= 0) {
+            acc.installed.unshift(wallet.adapter);
+          } else {
+            acc.loadable.push(wallet.adapter);
+          }
           return acc;
         }
         // NotDetected
         if (wallet.readyState === WalletReadyState.NotDetected) {
-          acc.loadable.push(wallet.adapter);
+          if (TOP_WALLETS.indexOf(adapterName) >= 0) {
+            acc.installed.unshift(wallet.adapter);
+          } else {
+            acc.loadable.push(wallet.adapter);
+          }
           return acc;
         }
         return acc;

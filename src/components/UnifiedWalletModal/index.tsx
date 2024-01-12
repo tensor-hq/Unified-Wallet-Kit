@@ -19,13 +19,15 @@ import NotInstalled from './NotInstalled';
 import { OnboardingFlow } from './Onboarding';
 
 export const mobileUniLink = (adapter: Adapter) => {
+  const isIOSOrAndroidDevice = /Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent);
+
+  if (!isIOSOrAndroidDevice) return null;
+
   const uniLink =
     adapter.name === 'Backpack'
       ? 'https://backpack.app/ul/v1/browse/'
       : adapter.name === 'Phantom'
       ? 'https://phantom.app/ul/browse/'
-      : adapter.name === 'Solflare'
-      ? 'https://solflare.com/ul/browse/'
       : adapter.name === 'OKX'
       ? 'https://www.okx.com/download?deeplink=okx%3A%2F%2Fwallet%2Fdapp%2Furl%3FdappUrl%3D'
       : undefined;

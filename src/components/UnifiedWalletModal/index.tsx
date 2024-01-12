@@ -18,6 +18,30 @@ import { isMobile, useOutsideClick } from '../../misc/utils';
 import NotInstalled from './NotInstalled';
 import { OnboardingFlow } from './Onboarding';
 
+export const mobileUniLink = (adapter: Adapter) => {
+  const uniLink =
+    adapter.name === 'Backpack'
+      ? 'https://backpack.app/ul/v1/browse/'
+      : adapter.name === 'Phantom'
+      ? 'https://phantom.app/ul/browse/'
+      : adapter.name === 'Solflare'
+      ? 'https://solflare.com/ul/browse/'
+      : adapter.name === 'OKX'
+      ? 'https://www.okx.com/download?deeplink=okx%3A%2F%2Fwallet%2Fdapp%2Furl%3FdappUrl%3D'
+      : undefined;
+
+  if (!uniLink) return null;
+
+  const defaultLink = 'https://www.tensor.trade';
+
+  const suffix =
+    typeof window === 'undefined' || !window?.location?.href || !window?.location?.origin
+      ? `${encodeURIComponent(defaultLink)}?ref=${defaultLink}`
+      : `${encodeURIComponent(window.location.href)}?ref=${window.location.origin}`;
+
+  return window.open(`${uniLink}${suffix}`, '_blank');
+};
+
 const styles: Record<string, { [key in IUnifiedTheme]: TwStyle[] }> = {
   container: {
     light: [tw`text-black !bg-white shadow-xl`],
@@ -84,6 +108,9 @@ const ListOfWallets: React.FC<{
 
   const onClickWallet = React.useCallback((event: React.MouseEvent<HTMLElement, MouseEvent>, adapter: Adapter) => {
     if (adapter.readyState === WalletReadyState.NotDetected) {
+      if (mobileUniLink(adapter)) {
+        return;
+      }
       setShowNotInstalled(adapter);
       return;
     }

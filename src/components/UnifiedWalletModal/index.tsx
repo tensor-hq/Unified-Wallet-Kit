@@ -26,6 +26,8 @@ export const mobileUniLink = (adapter: Adapter) => {
   const uniLink =
     adapter.name === 'Backpack'
       ? 'https://backpack.app/ul/v1/browse/'
+      : adapter.name === 'Solflare'
+      ? 'https://solflare.com/ul/browse/'
       : adapter.name === 'Phantom'
       ? 'https://phantom.app/ul/browse/'
       : adapter.name === 'OKX'
@@ -36,11 +38,10 @@ export const mobileUniLink = (adapter: Adapter) => {
 
   const defaultLink = encodeURIComponent('https://www.tensor.trade');
 
-  alert(`${window} ${window?.location?.href} ${window?.location?.origin}`);
   const suffix =
-    typeof window === 'undefined' || !window?.location?.href || !window?.location?.origin
-      ? `${encodeURIComponent(defaultLink)}?ref=${defaultLink}`
-      : `${encodeURIComponent(window.location.href)}?ref=${window.location.origin}`;
+    typeof window === 'undefined' || !window?.location?.href
+      ? `${encodeURIComponent(defaultLink)}`
+      : `${encodeURIComponent(window.location.href)}`;
 
   return window.open(`${uniLink}${suffix}`, '_blank');
 };

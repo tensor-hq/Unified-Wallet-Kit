@@ -34,6 +34,7 @@ export const mobileUniLink = (adapter: Adapter) => {
       ? 'https://www.okx.com/download?deeplink=okx%3A%2F%2Fwallet%2Fdapp%2Furl%3FdappUrl%3D'
       : undefined;
 
+  alert(adapter.name);
   if (!uniLink) return null;
 
   const defaultLink = encodeURIComponent('https://www.tensor.trade');

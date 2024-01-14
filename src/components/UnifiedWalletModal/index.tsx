@@ -27,22 +27,24 @@ export const mobileUniLink = (adapter: Adapter) => {
     adapter.name === 'Backpack'
       ? 'https://backpack.app/ul/v1/browse/'
       : adapter.name === 'Solflare'
-      ? 'https://solflare.com/ul/browse/'
+      ? 'https://solflare.com/ul/v1/browse/'
       : adapter.name === 'Phantom'
       ? 'https://phantom.app/ul/browse/'
       : adapter.name === 'OKX'
-      ? 'https://www.okx.com/download?deeplink=okx%3A%2F%2Fwallet%2Fdapp%2Furl%3FdappUrl%3D'
+      ? `https://www.okx.com/download?deeplink=${encodeURIComponent('okx://wallet/dapp/url?dappUrl=')}`
       : undefined;
-
-  alert(adapter.name);
   if (!uniLink) return null;
 
   const defaultLink = encodeURIComponent('https://www.tensor.trade');
 
-  const suffix =
+  let suffix =
     typeof window === 'undefined' || !window?.location?.href
       ? `${encodeURIComponent(defaultLink)}`
       : `${encodeURIComponent(window.location.href)}`;
+
+  if (adapter.name === 'Solflare') {
+    suffix = `${suffix}?ref=${window?.location?.origin || defaultLink}`;
+  }
 
   return window.open(`${uniLink}${suffix}`, '_blank');
 };
@@ -112,10 +114,15 @@ const ListOfWallets: React.FC<{
   const [showNotInstalled, setShowNotInstalled] = useState<Adapter | false>(false);
 
   const onClickWallet = React.useCallback((event: React.MouseEvent<HTMLElement, MouseEvent>, adapter: Adapter) => {
-    if (adapter.readyState === WalletReadyState.NotDetected) {
+    if (
+      ![WalletReadyState.Installed, WalletReadyState.Loadable].includes(adapter.readyState) ||
+      ([WalletReadyState.Loadable].includes(adapter.readyState) && adapter.name === 'Solflare')
+    ) {
       if (mobileUniLink(adapter)) {
         return;
       }
+    }
+    if (adapter.readyState === WalletReadyState.NotDetected) {
       setShowNotInstalled(adapter);
       return;
     }

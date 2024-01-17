@@ -76,26 +76,57 @@ const Index = () => {
                 </div>
               </div>
 
-              <div className="hideScrollbar" tw="bg-black/25 mt-12 max-w-[600px] rounded-xl p-4 w-full">
+              {/* <div className="hideScrollbar" tw="bg-black/25 mt-12 max-w-[600px] rounded-xl p-4 w-full">
                 <div tw="font-semibold text-white">Base with Wallet Standard only</div>
                 <div tw="mt-4">
                   <ExampleBaseOnly theme={theme} lang={lang} />
                 </div>
-              </div>
+              </div> */}
 
               <div className="hideScrollbar" tw="bg-black/25 mt-12 max-w-[600px] rounded-xl p-4 w-full">
-                <div tw="font-semibold text-white">With selected wallets</div>
+                <div tw="font-semibold text-white">autoConnect = true</div>
+                <p tw="text-white text-base mt-4 px-2">
+                  Reproduced on iPhone, both Safari and Chrome
+                  <br />
+                  <br />
+                  Expected behaviour:
+                  <br />
+                  Phantom opens every time
+                  <br />
+                  <br />
+                  Actual behaviour:
+                  <br />
+                  1: click phantom, does nothing
+                  <br />
+                  2: click solflare then click phantom, phantom opens
+                  <br />
+                  3: click phantom, does nothing
+                  <br />
+                  4: click solflare then click phantom, phantom opens
+                </p>
                 <div tw="mt-4">
-                  <ExampleSelectedWallets theme={theme} lang={lang} />
+                  <ExampleSelectedWallets theme={theme} lang={lang} autoConnect={true} />
                 </div>
               </div>
 
               <div className="hideScrollbar" tw="bg-black/25 mt-12 max-w-[600px] rounded-xl p-4 w-full">
+                <div tw="font-semibold text-white">autoConnect = false</div>
+                <p tw="text-white text-base mt-4 px-2">
+                  Actual behaviour:
+                  <br />
+                  Phantom opens every time
+                </p>
+                <div tw="mt-4">
+                  <ExampleSelectedWallets theme={theme} lang={lang} autoConnect={false} />
+                </div>
+              </div>
+
+              {/* <div className="hideScrollbar" tw="bg-black/25 mt-12 max-w-[600px] rounded-xl p-4 w-full">
                 <div tw="font-semibold text-white">Example with All Wallets, and Custom Wallets</div>
                 <div tw="mt-4">
                   <ExampleAllWallets theme={theme} lang={lang} />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

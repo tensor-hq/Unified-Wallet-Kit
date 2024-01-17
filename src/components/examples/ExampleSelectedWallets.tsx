@@ -19,7 +19,11 @@ import { HARDCODED_DECLARTION_BLOCK, HARDCODED_WALLET_CODEBLOCK } from './snippe
 import { IUnifiedTheme } from '../../contexts/UnifiedWalletContext';
 import { AllLanguage } from '../../contexts/TranslationProvider/i18n';
 
-const ExampleSelectedWallets: React.FC<{ theme: IUnifiedTheme; lang: AllLanguage }> = ({ theme, lang }) => {
+const ExampleSelectedWallets: React.FC<{ theme: IUnifiedTheme; lang: AllLanguage; autoConnect: boolean }> = ({
+  theme,
+  lang,
+  autoConnect,
+}) => {
   const wallets: Adapter[] = useMemo(() => {
     const walletConnectWalletAdapter: WalletAdapterWithMutableSupportedTransactionVersions<BaseSignerWalletAdapter> | null =
       (() => {
@@ -56,7 +60,7 @@ const ExampleSelectedWallets: React.FC<{ theme: IUnifiedTheme; lang: AllLanguage
     () => ({
       wallets: wallets,
       config: {
-        autoConnect: false,
+        autoConnect: autoConnect,
         env: 'mainnet-beta',
         metadata: {
           name: 'UnifiedWallet',
@@ -80,14 +84,6 @@ const ExampleSelectedWallets: React.FC<{ theme: IUnifiedTheme; lang: AllLanguage
       <UnifiedWalletProvider {...params}>
         <UnifiedWalletButton />
       </UnifiedWalletProvider>
-
-      <div tw="w-full overflow-x-auto">
-        <CodeBlocks
-          params={params}
-          unparsedWalletDeclarationString={HARDCODED_DECLARTION_BLOCK}
-          unparsedWalletPropsString={HARDCODED_WALLET_CODEBLOCK}
-        />
-      </div>
     </div>
   );
 };

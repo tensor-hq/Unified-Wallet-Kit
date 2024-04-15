@@ -26,6 +26,9 @@ dependencies:
   '@solana/wallet-adapter-solflare':
     specifier: latest
     version: 0.6.28(@solana/web3.js@1.77.3)
+  '@solana/wallet-adapter-unsafe-burner':
+    specifier: ^0.1.7
+    version: 0.1.7(@solana/web3.js@1.77.3)
   react-use:
     specifier: '>=17.2.4'
     version: 17.4.0(react-dom@18.2.0)(react@18.2.0)
@@ -2920,10 +2923,9 @@ packages:
     dependencies:
       '@noble/curves': 1.1.0
       '@solana/wallet-adapter-base': 0.9.23(@solana/web3.js@1.77.3)
-      '@solana/wallet-standard-features': 1.1.0
-      '@solana/wallet-standard-util': 1.1.0
+      '@solana/wallet-standard-features': 1.2.0
+      '@solana/wallet-standard-util': 1.1.1
       '@solana/web3.js': 1.77.3
-    dev: true
 
   /@solana/wallet-adapter-walletconnect@0.1.16(@solana/web3.js@1.77.3)(lokijs@1.5.12):
     resolution: {integrity: sha512-jNaQwSho8hT7gF1ifePE8TJc1FULx8jCF16KX3fZPtzXDxKrj0R4VUpHMGcw4MlDknrnZNLOJAVvyiawAkPCRQ==}
@@ -3021,6 +3023,13 @@ packages:
       '@wallet-standard/base': 1.0.1
       '@wallet-standard/features': 1.0.3
 
+  /@solana/wallet-standard-features@1.2.0:
+    resolution: {integrity: sha512-tUd9srDLkRpe1BYg7we+c4UhRQkq+XQWswsr/L1xfGmoRDF47BPSXf4zE7ZU2GRBGvxtGt7lwJVAufQyQYhxTQ==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@wallet-standard/base': 1.0.1
+      '@wallet-standard/features': 1.0.3
+
   /@solana/wallet-standard-util@1.1.0:
     resolution: {integrity: sha512-vssoCIx43sY5EMrT1pVltsZZKPAQfKpPG3ib2fuqRqpTRGkeRFCPDf4lrVFAYYp238tFr3Xrr/3JLcGvPP7uYw==}
     engines: {node: '>=16'}
@@ -3028,6 +3037,15 @@ packages:
       '@noble/curves': 1.1.0
       '@solana/wallet-standard-chains': 1.1.0
       '@solana/wallet-standard-features': 1.1.0
+    dev: false
+
+  /@solana/wallet-standard-util@1.1.1:
+    resolution: {integrity: sha512-dPObl4ntmfOc0VAGGyyFvrqhL8UkHXmVsgbj0K9RcznKV4KB3MgjGwzo8CTSX5El5lkb0rDeEzFqvToJXRz3dw==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@noble/curves': 1.1.0
+      '@solana/wallet-standard-chains': 1.1.0
+      '@solana/wallet-standard-features': 1.2.0
 
   /@solana/wallet-standard-wallet-adapter-base@1.1.1(@solana/web3.js@1.77.3)(bs58@4.0.1):
     resolution: {integrity: sha512-+CPKbUZgiy0VpOWvy7sTpZYf04bB4eapslZNBg085zVLzNaFjrU9CYwudMLWbjlmZ4Wz0cE3DNtNwDtY0cj01A==}

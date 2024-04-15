@@ -34,7 +34,8 @@ const UnifiedWalletValueProvider = ({ children }: { children: React.ReactNode })
       connect: async () => {
         try {
           return await defaultWalletContext.connect();
-        } catch (error) {
+        } catch (error: any) {
+          alert(error?.message);
           // when wallet is not installed
         }
       },
@@ -63,7 +64,8 @@ const UnifiedWalletContextProvider: React.FC<
     if (nonAutoConnectAttempt && !autoConnect && wallet?.adapter.name) {
       try {
         connect();
-      } catch (error) {
+      } catch (error: any) {
+        alert('unifiedwalletprovider ' + error?.message);
         // when wallet is not installed
       }
       setNonAutoConnectAttempt(false);

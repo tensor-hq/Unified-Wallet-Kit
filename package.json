@@ -47,6 +47,7 @@
     "@solana/wallet-adapter-base": "0.9.23",
     "@solana/wallet-adapter-react": "0.15.35",
     "@solana/wallet-adapter-solflare": "latest",
+    "@solana/wallet-adapter-unsafe-burner": "^0.1.7",
     "react-use": ">=17.2.4"
   },
   "devDependencies": {

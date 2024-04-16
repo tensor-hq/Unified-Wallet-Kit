@@ -18,7 +18,6 @@ import {
   useUnifiedWalletContext,
 } from './UnifiedWalletContext';
 import { TranslationProvider } from './TranslationProvider';
-import { SolanaMobileWalletAdapterWalletName } from '@solana-mobile/wallet-adapter-mobile';
 
 export type IWalletProps = Omit<
   WalletContextState,
@@ -53,14 +52,10 @@ const UnifiedWalletContextProvider: React.FC<
   const previousPublicKey = usePrevious<PublicKey | null>(publicKey);
   const previousWallet = usePrevious<Wallet | null>(wallet);
 
-  // TENSOR TRADE FIX: mobile wallet connector does not connect when tapped, if config.autoConnect is true.
-  // we must connect() again
-  const autoConnect = config.autoConnect && wallet?.adapter.name !== SolanaMobileWalletAdapterWalletName;
-
   // Weird quirks for autoConnect to require select and connect
   const [nonAutoConnectAttempt, setNonAutoConnectAttempt] = useState(false);
   useEffect(() => {
-    if (nonAutoConnectAttempt && !autoConnect && wallet?.adapter.name) {
+    if (nonAutoConnectAttempt && wallet?.adapter.name) {
       try {
         connect();
       } catch (error) {
@@ -68,7 +63,7 @@ const UnifiedWalletContextProvider: React.FC<
       }
       setNonAutoConnectAttempt(false);
     }
-  }, [nonAutoConnectAttempt, autoConnect, wallet?.adapter.name]);
+  }, [nonAutoConnectAttempt, wallet?.adapter.name]);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -96,9 +91,7 @@ const UnifiedWalletContextProvider: React.FC<
         select(adapter.name);
 
         // Weird quirks for autoConnect to require select and connect
-        if (!autoConnect) {
-          setNonAutoConnectAttempt(true);
-        }
+        setNonAutoConnectAttempt(true);
 
         if (adapter.readyState === WalletReadyState.NotDetected) {
           throw WalletReadyState.NotDetected;
@@ -120,7 +113,7 @@ const UnifiedWalletContextProvider: React.FC<
         });
       }
     },
-    [select, connect, autoConnect, wallet?.adapter.name],
+    [select, connect, wallet?.adapter.name],
   );
 
   useEffect(() => {

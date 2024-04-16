@@ -27,7 +27,6 @@ export const mobileUniLink = (adapter: Adapter) => {
   // no deeplinks on desktop, or IOS phantom app
   // (!!) universal links break the iPhone phantom app wallet flow. after clicking a deeplink and coming back, Phantom gets stuck on 'Connecting..'
   if (!isIOSOrAndroidDevice || isIOSPhantomApp) return null;
-  if (isIOSPhantomApp) return null;
 
   const uniLink =
     adapter.name === 'Backpack'

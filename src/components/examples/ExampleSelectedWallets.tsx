@@ -11,7 +11,6 @@ import {
   TrustWalletAdapter,
   WalletConnectWalletAdapter,
 } from '@solana/wallet-adapter-wallets';
-import { UnsafeBurnerWalletAdapter } from '@solana/wallet-adapter-unsafe-burner';
 import { WalletAdapterWithMutableSupportedTransactionVersions, metadata } from './constants';
 import { Adapter, BaseSignerWalletAdapter, WalletAdapterNetwork, WalletName } from '@solana/wallet-adapter-base';
 import WalletNotification from './WalletNotification';
@@ -49,7 +48,6 @@ const ExampleSelectedWallets: React.FC<{ theme: IUnifiedTheme; lang: AllLanguage
       new SolflareWalletAdapter(),
       new CoinbaseWalletAdapter(),
       new TrustWalletAdapter(),
-      new UnsafeBurnerWalletAdapter(),
       walletConnectWalletAdapter,
     ].filter((item) => item && item.name && item.icon) as Adapter[];
   }, []);
